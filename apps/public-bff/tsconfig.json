@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../../libs/events" },
+    { "path": "../../libs/firestore" },
+    { "path": "../../libs/http" },
+    { "path": "../../libs/paste-id" },
+    { "path": "../../libs/storage" }
+  ]
+}

@@ -1,0 +1,19 @@
+# Copy to terraform.tfvars (gitignored) and fill in real values.
+project_id = "your-gcp-project-id"
+region     = "asia-southeast1"
+env        = "dev"
+
+artifact_registry_repo = "pastebin-apps-dev"
+content_bucket_name    = "your-gcp-project-id-pastebin-content-dev"
+public_domain          = "paste.example.com"
+
+author_bff_image = "asia-southeast1-docker.pkg.dev/your-gcp-project-id/pastebin-apps-dev/author-bff:latest"
+public_bff_image = "asia-southeast1-docker.pkg.dev/your-gcp-project-id/pastebin-apps-dev/public-bff:latest"
+reaper_image     = "asia-southeast1-docker.pkg.dev/your-gcp-project-id/pastebin-apps-dev/reaper:latest"
+
+common_env_vars = {
+  ENV    = "dev"
+  REGION = "asia-southeast1"
+}
+
+smoke_test_key = "replace-me-with-a-long-random-string"

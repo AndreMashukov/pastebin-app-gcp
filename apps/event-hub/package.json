@@ -1,0 +1,18 @@
+{
+  "name": "@pastebingcp/event-hub",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "@pastebingcp/events": "file:../libs/events",
+    "@pastebingcp/pubsub": "file:../libs/pubsub",
+    "@pastebingcp/proto-decode": "file:../libs/proto-decode",
+    "hono": "^4.4.0",
+    "@google-cloud/pubsub": "^4.7.0"
+  }
+}
