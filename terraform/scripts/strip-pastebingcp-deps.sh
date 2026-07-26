@@ -10,15 +10,19 @@ if [ ! -f "${PKG_FILE}" ]; then
   echo "strip-pastebingcp-deps: ${PKG_FILE} not found" >&2
   exit 1
 fi
-node -e '
+PKG_FILE="$PKG_FILE" node -e '
 const fs = require("fs");
-const pkg = JSON.parse(fs.readFileSync("/app/package.json", "utf8"));
-const deps = pkg.dependencies || {};
-const removed = Object.keys(deps).filter(k => k.startsWith("@pastebingcp/"));
-removed.forEach(k => delete deps[k]);
+const pkgFile = process.env.PKG_FILE;
+const pkg = JSON.parse(fs.readFileSync(pkgFile, "utf8"));
+const stripWorkspace = (deps = {}) => Object.fromEntries(
+  Object.entries(deps).filter(([k]) => !k.startsWith("@pastebingcp/"))
+);
+const removed = Object.keys(pkg.dependencies || {}).filter(k => k.startsWith("@pastebingcp/"));
+pkg.dependencies = stripWorkspace(pkg.dependencies);
+if (pkg.optionalDependencies) pkg.optionalDependencies = stripWorkspace(pkg.optionalDependencies);
+if (pkg.peerDependencies) pkg.peerDependencies = stripWorkspace(pkg.peerDependencies);
+fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + "\n");
 if (removed.length > 0) {
-  pkg.dependencies = deps;
-  fs.writeFileSync("/app/package.json", JSON.stringify(pkg, null, 2) + "\n");
   console.log(`strip-pastebingcp-deps: removed ${removed.length} @pastebingcp/* deps: ${removed.join(", ")}`);
 } else {
   console.log("strip-pastebingcp-deps: no @pastebingcp/* deps found");
