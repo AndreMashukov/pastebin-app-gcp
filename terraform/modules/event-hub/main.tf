@@ -78,7 +78,7 @@ resource "google_pubsub_topic" "events_dlq" {
 # `mapping.created`. Redirect-bff uses it to publish `click.recorded`.
 resource "google_service_account" "publisher" {
   project      = var.project_id
-  account_id   = "pastebingcp-eventhub-publisher"
+  account_id   = "pastebin-eventhub-publisher"
   display_name = "Pastebin event-hub publisher"
   description  = "Publishes mapping.created and click.recorded to the bus topic"
 }
@@ -95,7 +95,7 @@ resource "google_pubsub_topic_iam_member" "publisher" {
 # subscriptions use this to receive messages.
 resource "google_service_account" "subscriber" {
   project      = var.project_id
-  account_id   = "pastebingcp-eventhub-subscriber"
+  account_id   = "pastebin-eventhub-subscriber"
   display_name = "Pastebin event-hub subscriber"
   description  = "Pulls messages from bus subscriptions"
 }

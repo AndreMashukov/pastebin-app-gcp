@@ -10,7 +10,7 @@ terraform {
 
   # Bootstrap once per project, then set your bucket/prefix here.
   backend "gcs" {
-    bucket = "your-gcp-project-id-tfstate"
+    bucket = "serverless-503308-tfstate"
     prefix = "pastebin/dev/terraform.tfstate"
   }
 }

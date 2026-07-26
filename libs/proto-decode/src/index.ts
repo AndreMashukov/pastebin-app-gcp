@@ -105,7 +105,13 @@ const DocumentEventDataType = root.lookupType(
 
 export interface DecodedFirestoreDocument {
   name: string;
-  fields: Record<string, { stringValue?: string; timestampValue?: string }>;
+  fields: Record<string, {
+    stringValue?: string;
+    timestampValue?: string;
+    integerValue?: number | string;
+    doubleValue?: number;
+    booleanValue?: boolean;
+  }>;
   createTime?: string;
 }
 
@@ -144,6 +150,9 @@ export function decodeDocumentEventDataBytes(buf: Uint8Array): DecodedDocumentEv
       fields?: Record<string, {
         stringValue?: string;
         timestampValue?: { seconds?: string | number; nanos?: number };
+        integerValue?: number | string;
+        doubleValue?: number;
+        booleanValue?: boolean;
       }>;
       createTime?: { seconds?: string | number; nanos?: number };
     };
@@ -152,6 +161,9 @@ export function decodeDocumentEventDataBytes(buf: Uint8Array): DecodedDocumentEv
       fields?: Record<string, {
         stringValue?: string;
         timestampValue?: { seconds?: string | number; nanos?: number };
+        integerValue?: number | string;
+        doubleValue?: number;
+        booleanValue?: boolean;
       }>;
       createTime?: { seconds?: string | number; nanos?: number };
     };
@@ -166,6 +178,9 @@ export function decodeDocumentEventDataBytes(buf: Uint8Array): DecodedDocumentEv
     fields[key] = {
       stringValue: v.stringValue,
       timestampValue: timestampToIso(v.timestampValue),
+      integerValue: v.integerValue,
+      doubleValue: v.doubleValue,
+      booleanValue: v.booleanValue,
     };
   }
 
