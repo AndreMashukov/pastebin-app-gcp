@@ -26,6 +26,12 @@ function fieldString(fields: Record<string, { stringValue?: string; timestampVal
   return fields[key]?.stringValue ?? fields[key]?.timestampValue ?? '';
 }
 
+function fieldNumber(fields: Record<string, any>, key: string): number {
+  const f = fields[key];
+  if (!f) return 0;
+  return Number(f.integerValue ?? f.doubleValue ?? f.stringValue ?? 0);
+}
+
 async function publishPasteCreated(opts: {
   eventId: string;
   pasteId: string;
@@ -101,8 +107,7 @@ export async function handleFirestoreCreatedFromProtobuf(opts: {
   const createdAt = fieldString(fields, 'createdAt') || decoded.document.createTime || new Date().toISOString();
   const expiresAtRaw = fieldString(fields, 'expiresAt');
   const expiresAt = expiresAtRaw || null;
-  const sizeBytesRaw = fieldString(fields, 'sizeBytes');
-  const sizeBytes = sizeBytesRaw ? Number(sizeBytesRaw) : 0;
+  const sizeBytes = fieldNumber(fields, 'sizeBytes');
 
   if (!ownerUid || !contentType) {
     return { ack: true, ignored: 'missing-fields', fields: Object.keys(fields) };

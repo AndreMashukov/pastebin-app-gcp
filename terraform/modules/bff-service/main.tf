@@ -187,9 +187,9 @@ locals {
   # The Eventarc Pub/Sub subscription name convention.
   bus_subscription_name = "${var.service_name}-events"
   # The Cloud Run service runtime SA
-  runtime_sa_id = "pastebingcp-${var.service_name}-runtime"
+  runtime_sa_id = "pastebin-${var.service_name}-runtime"
   # The Eventarc trigger SA
-  eventarc_sa_id = "pastebingcp-${var.service_name}-eventarc"
+  eventarc_sa_id = "pastebin-${var.service_name}-eventarc"
   # Google-managed service agents
   eventarc_service_agent = "service-${var.project_number}@gcp-sa-eventarc.iam.gserviceaccount.com"
   pubsub_service_agent   = "service-${var.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
